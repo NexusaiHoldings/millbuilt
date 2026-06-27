@@ -36,18 +36,22 @@ export const NAV_CONFIG: NavConfig = {
         {
           label: "Orders",
           href: "/admin/orders",
+          adminOnly: true,
         },
         {
           label: "Materials",
           href: "/admin/materials",
+          adminOnly: true,
         },
         {
           label: "Pricing",
-          href: "/operator/pricing",
+          href: "/pricing",
+          adminOnly: true,
         },
         {
           label: "Partners",
-          href: "/operator/partners",
+          href: "/partners",
+          adminOnly: true,
         },
       ],
     },
