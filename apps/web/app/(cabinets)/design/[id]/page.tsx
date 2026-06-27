@@ -1,4 +1,4 @@
-import type { Metadata, JSX } from "next";
+import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { getSessionUser } from "@/lib/admin-auth";
@@ -75,7 +75,7 @@ export default async function DesignDetailPage({
   params,
 }: {
   params: { id: string };
-}): Promise<JSX.Element> {
+}) {
   const user = await getSessionUser();
   if (!user) redirect("/login");
 
