@@ -24,6 +24,7 @@
  */
 
 import type { HandlerContext, HandlerResult } from "@nexus/identity-and-access";
+import { handleDispatchOrderToManufacturingPartner } from "./dispatch_order_to_manufacturing_partner";
 
 type Args = Record<string, unknown>;
 
@@ -32,4 +33,6 @@ export const DOMAIN_DISPATCH: Record<
   (ctx: HandlerContext, args: Args) => Promise<HandlerResult>
 > = {
   // Build agent appends entries here per CTO-declared new_domain_tool.
+  dispatch_order_to_manufacturing_partner: (ctx, a) =>
+    handleDispatchOrderToManufacturingPartner(ctx, a),
 };
