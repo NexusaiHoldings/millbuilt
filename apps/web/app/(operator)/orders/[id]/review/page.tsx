@@ -220,7 +220,7 @@ export default async function OrderReviewPage({ params }: PageProps) {
     if (!partnerId) return;
 
     await dispatchOrderToPartner(params.id, partnerId, admin.id, notes);
-    redirect(`/operator/orders?status=in_production`);
+    redirect(`/orders?status=in_production`);
   }
 
   async function handleRevision(formData: FormData) {
@@ -239,7 +239,7 @@ export default async function OrderReviewPage({ params }: PageProps) {
       reData.order.design_name,
       notes,
     );
-    redirect(`/operator/orders?status=deposit_paid`);
+    redirect(`/orders?status=deposit_paid`);
   }
 
   async function handleEscalate(formData: FormData) {
@@ -257,7 +257,7 @@ export default async function OrderReviewPage({ params }: PageProps) {
       reData.order.design_name,
       notes,
     );
-    redirect(`/operator/orders?status=deposit_paid`);
+    redirect(`/orders?status=deposit_paid`);
   }
 
   const validationFails = validation?.rules.filter((r) => r.status === "fail") ?? [];
@@ -284,7 +284,7 @@ export default async function OrderReviewPage({ params }: PageProps) {
     <>
       <style dangerouslySetInnerHTML={{ __html: PAGE_STYLES }} />
       <main>
-        <a href="/operator/orders" className="back-link btn secondary">
+        <a href="/orders" className="back-link btn secondary">
           &larr; Back to Order Queue
         </a>
 
@@ -719,7 +719,7 @@ export default async function OrderReviewPage({ params }: PageProps) {
                   <strong>{order.status}</strong>). No further actions available
                   on this page.
                 </p>
-                <a href="/operator/orders" className="btn secondary">
+                <a href="/orders" className="btn secondary">
                   Return to Queue
                 </a>
               </div>
