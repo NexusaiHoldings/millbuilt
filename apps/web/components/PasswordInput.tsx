@@ -63,6 +63,7 @@ export function PasswordInput({
           width: "1.75rem",
           minHeight: 0,
           padding: 0,
+          margin: 0,  // override `main button { margin-top: 1.25rem }` (form-button spacing) — keeps the eye centered.
           background: "transparent",
           border: "none",
           borderRadius: 6,
