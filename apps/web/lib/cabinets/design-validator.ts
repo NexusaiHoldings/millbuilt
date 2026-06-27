@@ -35,6 +35,7 @@ const THICKNESS_STANDARD = 0.75;   // inches (3/4")
 const THICKNESS_THIN = 0.5;        // inches (1/2")
 const TALL_CABINET_HEIGHT = 54;    // inches — above this = tall/pantry unit
 const MAX_WALL_WEIGHT_STANDARD = 150; // lbs — per standard dual-anchor pair
+const MAX_WALL_WEIGHT_HARD_FAIL = 225; // lbs — 1.5× standard; requires French cleat + 3+ studs
 const WOOD_DENSITY = 0.025;        // lbs per cubic inch (mixed hardwood approx.)
 
 // ── Thickness inference ───────────────────────────────────────────────────────
@@ -230,14 +231,12 @@ function checkWallMountWeight(
   const contentsLbs = ((width * depth) / 144) * 3 * shelfCount;
 
   const totalLbs = Math.round(shellWeightLbs + contentsLbs);
-  const hardFailThreshold = Math.round(MAX_WALL_WEIGHT_STANDARD * 1.5);
-
-  if (totalLbs > hardFailThreshold) {
+  if (totalLbs > MAX_WALL_WEIGHT_HARD_FAIL) {
     return {
       rule_id: "wall_mount_weight",
       rule_name: "Wall-Mount Weight Threshold",
       status: "fail",
-      message: `Estimated loaded weight of ${totalLbs} lbs exceeds the ${hardFailThreshold} lb hard-fail threshold for standard wall anchors.`,
+      message: `Estimated loaded weight of ${totalLbs} lbs exceeds the ${MAX_WALL_WEIGHT_HARD_FAIL} lb hard-fail threshold for standard wall anchors.`,
       suggestion: `Reduce to ≤36"W × 42"H × 15"D for standard mounting. For oversized units, use continuous French cleats rated ≥${Math.ceil(totalLbs * 1.5)} lbs and anchor into at least 3 studs.`,
       affected_dimension: "weight",
     };
