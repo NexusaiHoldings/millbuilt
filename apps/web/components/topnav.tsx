@@ -78,9 +78,10 @@ export async function TopNav(): Promise<JSX.Element> {
           .map((link) => (
             <NavItem key={link.href} {...link} />
           ))}
-        {NAV_CONFIG.groups.map((group) => (
-          <NavGroupItem key={group.label} group={group} />
-        ))}
+        {isAdmin &&
+          NAV_CONFIG.groups.map((group) => (
+            <NavGroupItem key={group.label} group={group} />
+          ))}
         {isAdmin && <NavItem href="/crm" label="CRM" />}
         {isAdmin && <NavItem href="/admin/analytics" label="Analytics" />}
         {isAdmin && <NavItem href="/admin" label="Admin" />}

@@ -121,7 +121,7 @@ export const homeConfig: HomeConfig = {
       "subhead": "MillBuilt's browser-based 3D configurator lets you spec every dimension, finish, and hardware detail \u2014 then generates a shop-ready quote in seconds, with no drafting fees, no showroom appointments, and no guesswork.",
       "primaryCta": {
         "label": "Start Designing Free",
-        "href": "/configure"
+        "href": "/design"
       },
       "secondaryCta": {
         "label": "See How It Works",
