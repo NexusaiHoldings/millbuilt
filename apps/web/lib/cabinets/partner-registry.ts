@@ -109,6 +109,22 @@ export async function getActivePartners(): Promise<ManufacturingPartner[]> {
   );
 }
 
+export async function getPartnersByState(
+  stateCode: string
+): Promise<ManufacturingPartner[]> {
+  await ensureTablesExist();
+  const db = buildDb();
+  const code = stateCode.trim().toUpperCase();
+  return db.query<ManufacturingPartner>(
+    `SELECT ${COLS}
+     FROM cabinet_manufacturing_partners
+     WHERE active = TRUE
+       AND (supported_states = '{}' OR $1 = ANY(supported_states))
+     ORDER BY lead_time_days ASC, name ASC`,
+    code
+  );
+}
+
 export async function getPartnerById(
   id: string
 ): Promise<ManufacturingPartner | null> {
