@@ -34,6 +34,7 @@
     "@nexus/social-and-engagement": "*",
     "@nexus/analytics-and-telemetry": "*",
     "@nexus/search": "*",
-    "@nexus-substrate/runtime-client": "*"
+    "@nexus-substrate/runtime-client": "*",
+    "@nexus/feedback": "*"
   }
 }
