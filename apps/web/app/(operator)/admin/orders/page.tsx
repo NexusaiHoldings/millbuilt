@@ -168,7 +168,7 @@ export default async function OperatorOrdersPage({ searchParams }: PageProps) {
           {tabDefs.map((tab) => (
             <a
               key={tab.key}
-              href={`/orders?status=${tab.key}`}
+              href={`/admin/orders?status=${tab.key}`}
               className={`filter-tab${filter === tab.key ? " active" : ""}`}
             >
               {tab.label}
@@ -217,7 +217,7 @@ export default async function OperatorOrdersPage({ searchParams }: PageProps) {
                   <td>{fmtDate(order.created_at)}</td>
                   <td>
                     <a
-                      href={`/orders/${order.id}/review`}
+                      href={`/admin/orders/${order.id}/review`}
                       className={
                         order.status === "deposit_paid" ? "btn" : "btn secondary"
                       }

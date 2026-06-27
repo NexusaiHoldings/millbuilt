@@ -35,7 +35,7 @@ export const NAV_CONFIG: NavConfig = {
       links: [
         {
           label: "Orders",
-          href: "/operator/orders",
+          href: "/admin/orders",
         },
         {
           label: "Materials",
