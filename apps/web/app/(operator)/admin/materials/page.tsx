@@ -247,7 +247,7 @@ function MaterialEditForm({
         </div>
         <div className="form-actions">
           <button type="submit" className="btn">Save Changes</button>
-          <a href="/materials" className="btn secondary">Cancel</a>
+          <a href="/admin/materials" className="btn secondary">Cancel</a>
         </div>
       </form>
     </div>
@@ -330,7 +330,7 @@ function MaterialCard({
 
       <div className="mat-card-actions" style={{ padding: "0 1rem 1rem" }}>
         <a
-          href={`/materials?edit=${material.id}`}
+          href={`/admin/materials?edit=${material.id}`}
           className="btn secondary"
           style={{ fontSize: "0.82rem" }}
         >
@@ -463,7 +463,7 @@ function AddMaterialForm({
         </div>
         <div className="form-actions">
           <button type="submit" className="btn">Add Material</button>
-          <a href="/materials" className="btn secondary">Cancel</a>
+          <a href="/admin/materials" className="btn secondary">Cancel</a>
         </div>
       </form>
     </div>
@@ -518,7 +518,7 @@ export default async function OperatorMaterialsPage({
       mat.id,
       { name: mat.name, category: mat.category }
     );
-    redirect("/materials");
+    redirect("/admin/materials");
   }
 
   async function handleUpdate(formData: FormData) {
@@ -552,7 +552,7 @@ export default async function OperatorMaterialsPage({
       id,
       { slug: input.configurator_slug }
     );
-    redirect("/materials");
+    redirect("/admin/materials");
   }
 
   async function handleToggle(formData: FormData) {
@@ -570,7 +570,7 @@ export default async function OperatorMaterialsPage({
       id,
       { active }
     );
-    redirect("/materials");
+    redirect("/admin/materials");
   }
 
   return (
@@ -586,7 +586,7 @@ export default async function OperatorMaterialsPage({
             </p>
           </div>
           {!isAdding && (
-            <a href="/materials?mode=add" className="btn">
+            <a href="/admin/materials?mode=add" className="btn">
               + Add Material
             </a>
           )}
@@ -603,7 +603,7 @@ export default async function OperatorMaterialsPage({
               Materials, finishes, and hardware you add here will appear in the
               customer-facing configurator once activated.
             </p>
-            <a href="/materials?mode=add" className="btn">
+            <a href="/admin/materials?mode=add" className="btn">
               + Add Material
             </a>
           </div>

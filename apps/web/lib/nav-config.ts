@@ -39,7 +39,7 @@ export const NAV_CONFIG: NavConfig = {
         },
         {
           label: "Materials",
-          href: "/operator/materials",
+          href: "/admin/materials",
         },
         {
           label: "Pricing",
