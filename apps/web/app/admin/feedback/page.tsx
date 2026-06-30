@@ -224,7 +224,7 @@ export default function FeedbackAdminPage(): JSX.Element {
                       High-risk
                     </span>
                   )}
-                  {rec && (
+                  {rec && !terminal && (
                     <span style={{ color: recColor(rec), fontSize: 12, fontWeight: 700,
                       textTransform: "capitalize" }}>
                       {rec}
