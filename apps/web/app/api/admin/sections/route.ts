@@ -27,6 +27,8 @@ const STATIC_SECTIONS: Section[] = [
   { id: "feature-flags", lego_name: "admin-console", section_name: "Feature Flags", section_order: 10, routes: ["/admin/feature-flags"] },
   { id: "system-config", lego_name: "admin-console", section_name: "System Config", section_order: 11, routes: ["/admin/system-config"] },
   { id: "audit-log", lego_name: "admin-console", section_name: "Audit Log", section_order: 12, routes: ["/admin/audit-log"] },
+  { id: "materials", lego_name: "cabinets", section_name: "Materials", section_order: 13, routes: ["/admin/materials"] },
+  { id: "orders", lego_name: "cabinets", section_name: "Orders", section_order: 14, routes: ["/admin/orders"] },
   { id: "feedback", lego_name: "feedback", section_name: "Feedback", section_order: 25, routes: ["/admin/feedback"] },
   { id: "legal", lego_name: "legal-and-compliance", section_name: "Legal", section_order: 30, routes: ["/admin/legal"] },
   { id: "billing", lego_name: "billing-and-subscriptions", section_name: "Billing", section_order: 40, routes: ["/admin/billing"] },
