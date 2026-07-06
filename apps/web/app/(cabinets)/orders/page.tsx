@@ -85,6 +85,41 @@ const PAGE_STYLES = `
   margin-bottom: 1rem;
   opacity: 0.4;
 }
+.section-heading {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #888;
+  margin: 1.75rem 0 0.75rem;
+}
+.completed-details {
+  margin-top: 2rem;
+}
+.completed-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #888;
+  user-select: none;
+  padding: 0.4rem 0;
+}
+.completed-summary::-webkit-details-marker { display: none; }
+.completed-summary::before {
+  content: "▶";
+  font-size: 0.6rem;
+  transition: transform 0.15s;
+  display: inline-block;
+}
+details[open] .completed-summary::before {
+  transform: rotate(90deg);
+}
 `;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -139,6 +174,76 @@ function currentMilestoneLabel(status: CabinetOrder["status"]): string {
   }
 }
 
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+const ACTIVE_STATUSES: CabinetOrder["status"][] = ["deposit_paid", "in_production", "ready"];
+
+function isActive(order: CabinetOrder): boolean {
+  return (ACTIVE_STATUSES as string[]).includes(order.status);
+}
+
+// ── Shared table component ────────────────────────────────────────────────────
+
+function OrdersTable({ orders }: { orders: CabinetOrder[] }) {
+  return (
+    <div className="card" style={{ padding: 0, overflow: "hidden" }}>
+      <table className="orders-table">
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>Design</th>
+            <th>Status</th>
+            <th>Current Stage</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {orders.map((order) => (
+            <tr key={order.id}>
+              <td>
+                <span className="order-id-chip">
+                  #{order.id.substring(0, 8).toUpperCase()}
+                </span>
+              </td>
+              <td style={{ fontWeight: 600, color: "#111" }}>
+                {order.design_name || "Custom Cabinet"}
+              </td>
+              <td>
+                <span className={statusPillClass(order.status)}>
+                  <span className="status-pill-dot" />
+                  {statusLabel(order.status)}
+                </span>
+              </td>
+              <td>
+                <span className="milestone-chip">
+                  {currentMilestoneLabel(order.status)}
+                </span>
+              </td>
+              <td className="muted" style={{ fontSize: "0.85rem" }}>
+                {formatDate(order.created_at)}
+              </td>
+              <td style={{ fontWeight: 700 }}>
+                {formatCents(order.total_price_cents)}
+              </td>
+              <td>
+                <Link
+                  href={`/orders/${order.id}`}
+                  className="btn secondary"
+                  style={{ fontSize: "0.8rem", padding: "0.3rem 0.75rem" }}
+                >
+                  Track &rarr;
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default async function OrdersPage() {
@@ -151,6 +256,9 @@ export default async function OrdersPage() {
   } catch {
     // Table may not exist yet on a fresh deploy — treat as empty list
   }
+
+  const activeOrders = orders.filter(isActive);
+  const completedOrders = orders.filter((o) => !isActive(o));
 
   return (
     <>
@@ -182,70 +290,44 @@ export default async function OrdersPage() {
             </Link>
           </div>
         ) : (
-          <div className="card" style={{ padding: 0, overflow: "hidden" }}>
-            <table className="orders-table">
-              <thead>
-                <tr>
-                  <th>Order</th>
-                  <th>Design</th>
-                  <th>Status</th>
-                  <th>Current Stage</th>
-                  <th>Date</th>
-                  <th>Total</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((order) => (
-                  <tr key={order.id}>
-                    <td>
-                      <span className="order-id-chip">
-                        #{order.id.substring(0, 8).toUpperCase()}
-                      </span>
-                    </td>
-                    <td style={{ fontWeight: 600, color: "#111" }}>
-                      {order.design_name || "Custom Cabinet"}
-                    </td>
-                    <td>
-                      <span className={statusPillClass(order.status)}>
-                        <span className="status-pill-dot" />
-                        {statusLabel(order.status)}
-                      </span>
-                    </td>
-                    <td>
-                      <span className="milestone-chip">
-                        {currentMilestoneLabel(order.status)}
-                      </span>
-                    </td>
-                    <td className="muted" style={{ fontSize: "0.85rem" }}>
-                      {formatDate(order.created_at)}
-                    </td>
-                    <td style={{ fontWeight: 700 }}>
-                      {formatCents(order.total_price_cents)}
-                    </td>
-                    <td>
-                      <Link
-                        href={`/orders/${order.id}`}
-                        className="btn secondary"
-                        style={{ fontSize: "0.8rem", padding: "0.3rem 0.75rem" }}
-                      >
-                        Track &rarr;
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+          <>
+            {/* Active orders section — always visible */}
+            <p className="section-heading">
+              Active Orders
+              {activeOrders.length > 0 && (
+                <span className="muted" style={{ fontWeight: 400, marginLeft: "0.5rem", textTransform: "none", letterSpacing: 0 }}>
+                  ({activeOrders.length})
+                </span>
+              )}
+            </p>
 
-        {orders.length > 0 && (
-          <p
-            className="muted"
-            style={{ fontSize: "0.8rem", marginTop: "1rem", textAlign: "right" }}
-          >
-            Showing {orders.length} order{orders.length !== 1 ? "s" : ""}
-          </p>
+            {activeOrders.length === 0 ? (
+              <div className="empty" style={{ marginBottom: "1rem" }}>
+                No active orders right now.
+              </div>
+            ) : (
+              <OrdersTable orders={activeOrders} />
+            )}
+
+            {/* Completed orders — collapsed by default */}
+            {completedOrders.length > 0 && (
+              <details className="completed-details">
+                <summary className="completed-summary">
+                  Completed Orders ({completedOrders.length})
+                </summary>
+                <div style={{ marginTop: "0.75rem" }}>
+                  <OrdersTable orders={completedOrders} />
+                </div>
+              </details>
+            )}
+
+            <p
+              className="muted"
+              style={{ fontSize: "0.8rem", marginTop: "1rem", textAlign: "right" }}
+            >
+              Showing {orders.length} order{orders.length !== 1 ? "s" : ""} total
+            </p>
+          </>
         )}
       </main>
     </>
