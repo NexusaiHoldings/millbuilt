@@ -87,6 +87,9 @@ function Hero(s: HeroSection, ctx: SectionContext): JSX.Element {
             <Link href={primary.href} className="btn">{primary.label}</Link>
             {s.secondaryCta ? <Link href={s.secondaryCta.href} className="btn secondary">{s.secondaryCta.label}</Link> : null}
           </div>
+          <p style={{ fontSize: "0.9rem", color: "var(--substrate-muted)", marginTop: 12, marginBottom: 0 }}>
+            Quotes are free — typically ready in under 2 minutes.
+          </p>
         </div>
         {img ? (
           // eslint-disable-next-line @next/next/no-img-element

@@ -82,6 +82,9 @@ export async function Landing(): Promise<JSX.Element> {
           </Link>
         ) : null}
       </div>
+      <p style={{ fontSize: "0.9rem", color: "var(--substrate-muted)", marginTop: 12, marginBottom: 0 }}>
+        Quotes are free — typically ready in under 2 minutes.
+      </p>
     </div>
   );
 
